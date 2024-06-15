@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Photo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #header1 .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #header1 a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #111;
+        }
+
+        .upload-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 50%;
+            max-width: 800px;
+            margin: 40px auto;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- My Photo Diary 바 -->
+    <div id="header1">
+        <div>My Photo Diary</div>
+        <div class="nav-right">
+            <a href="{{ url_for('signout') }}">Sign Out</a>
+        </div>
+    </div>
+
+    <!-- 네비게이션 바 -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">HOME</a></li>
+            <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
+            <li><a href="{{ url_for('upload_photo') }}">UPLOAD</a></li>
+            <li><a href="{{ url_for('messages') }}">MESSAGE</a></li>
+        </ul>
+    </nav>
+
+    <!-- 사진 수정 컨테이너 -->
+    <div class="upload-container">
+        <h1>Edit Photo</h1>
+        <form action="{{ url_for('edit_photo', photo_id=photo._id) }}" method="post" enctype="multipart/form-data">
+            <label for="description">Description:</label>
+            <input type="text" id="description" name="description" value="{{ photo.description }}" required>
+
+            <label for="keywords">Keywords:</label>
+            <input type="text" id="keywords" name="keywords" value="{{ photo.keywords | join(', ') }}" required>
+
+            <label for="file">Change Photo (Optional):</label>
+            <input type="file" id="file" name="file">
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</body>
+</html>

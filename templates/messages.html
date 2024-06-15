@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        #header1 .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #header1 a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #111;
+        }
+
+        #content {
+            display: flex;
+            overflow: hidden;
+            height:599px;
+        }
+        #big{
+            display:flex;
+            flex-direction: column;
+            width: 80%;
+            height: 100%;
+        }
+        #message {
+            background-color: #bbb;
+            display: flex;
+            flex-direction: column;
+            width: 98%;
+            height: 70%;
+            margin: 20px 0;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .message-box{
+            display:flex;
+        }
+
+        .message-inner{
+            position: relative;
+            flex-direction:column;
+            width: 35%;
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            padding-inline-start: 1.5em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .message-sent{
+            justify-content: flex-end;
+            text-align: right;
+            margin-left: 10px;
+        }
+        
+        .message-received{
+            justify-content:flex-start;
+            text-align: left;
+        }
+
+        .sent{
+            justify-content: flex-end;
+        }
+
+        .received{
+            justify-content: flex-start;
+        }
+        
+        .delete{
+            display:flex;
+            align-items:center;
+        }
+
+        .delete-button{
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+            padding: 10px 20px;
+            color: black;
+            border-radius: 4px;
+        }
+
+        .delete-button:hover{
+            background-color: red;
+        }
+
+
+        .reply{
+            display:flex;
+            align-items:center;
+        }
+
+        .reply-button{
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            padding: 10px 20px;
+            color: black;
+            border-radius: 4px;
+        }
+
+        .reply-button:hover{
+            background-color: green;
+        }
+
+        .footer{
+            bottom: 0px;
+            width: 100%;
+            position: absolute;
+            height: 10rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            flex-shrink: 0; /* Ensures the form does not shrink */
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            width: 98%;
+        }
+
+        form input, form textarea {
+            margin: 1px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form input {
+            width: 96%;
+        }
+
+        form textarea {
+            flex: 1;
+        }
+
+        form button {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #111;
+        }
+        
+        #userlist {
+            width: 17%;
+            right: 0px;
+            padding: 20px;
+            background-color: #fff;
+            overflow-y: auto;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+        
+        #userlist ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #userlist p {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-color: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #e9ebee;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .user-card:hover {
+            background-color: #f0f2f5;
+        }
+
+        .user-details {
+            display: flex;
+            text-align:center;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .user-email {
+            font-size: 14px;
+            color: #606770;
+        }
+    </style>
+</head>
+<body>
+    <div id="header1">
+        <div>My Photo Diary</div>
+        <div class="nav-right">
+            <a href="{{ url_for('signout') }}">Sign Out</a>
+        </div>
+    </div>
+    
+    <!-- 네비게이션 바 -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">HOME</a></li>
+            <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
+            <li><a href="{{ url_for('upload_photo') }}">UPLOAD</a></li>
+            <li><a href="{{ url_for('messages') }}">MESSAGE</a></li>
+        </ul>
+    </nav>
+    
+    <div id="content">
+        <div id = "big">
+            <div id="message">
+                {% for message in messages %}
+                {% if message.recipient != me %}
+                <div class="message-box message-sent">  
+                    <div class="delete">
+                        <form action="{{ url_for('delete_message', message_id=message._id, recipient_id = recipient_id)}}" method="post">
+                            <button type="submit" class="delete-button">delete</button>
+                        </form>
+                    </div>
+                    <div class="message-inner sent">
+                        <p>{{ message.message }}</p>
+                    </div>
+                </div>
+                {% elif message.recipient == me%}
+                <div class="message-box message-received">
+                    <div class="message-inner received">
+                        <p>{{ message.message }}</p>    
+                    </div>
+                    <div class="reply">
+                        <button class="reply-button" onclick="changeInputValue('{{recipient_id}}')">reply</button>
+                    </div>
+                </div>
+                {%else%}
+                {% endif%}
+                {% endfor %} 
+            </div>
+            <div id="footer">
+                <form action="{{ url_for('messages', recipient_id=recipient_id) }}" method="post">                
+                    <input type="hidden" name="recipient_id" value="{{ recipient_id }}">
+                    <input type="text" name="recipient" id="receiver" value = "" placeholder="Recipient" required><br>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Message" required></textarea>
+                        <button type="submit">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="userlist">
+            <ul>
+                <p>User List</p>
+                {% for user in users %}
+                <div class="user-card">
+                    <div class="user-details">
+                        <a href="{{ url_for('messages', recipient_id=user.username) }}" class="user-name">{{ user.username }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <script>
+        function changeInputValue(recipient_id) {
+            document.getElementById('receiver').value = recipient_id;
+        }
+    </script>
+</body>
+</html>

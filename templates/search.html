@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #header1 .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #header1 a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #111;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 40px auto;
+            width: 80%;
+            max-width: 1000px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            text-align: left;
+            width: 100%;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1.2em;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #FFA500;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #FF8C00;
+        }
+    </style>
+</head>
+<body>
+    <!-- My Photo Diary 바 -->
+    <div id="header1">
+        <div>My Photo Diary</div>
+        <div class="nav-right">
+            {% if session.username %}
+            <a href="{{ url_for('signout') }}">Sign Out</a>
+            {% else %}
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+            <a href="{{ url_for('login') }}">Log In</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- 네비게이션 바 -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">HOME</a></li>
+            <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
+            <li><a href="{{ url_for('upload_photo') }}">UPLOAD</a></li>
+            <li><a href="{{ url_for('search') }}">SEARCH</a></li>
+            <li><a href="{{ url_for('messages') }}">MESSAGE</a></li>
+        </ul>
+    </nav>
+
+    <!-- 검색 컨테이너 -->
+    <div class="search-container">
+        <h1>Search Keyword</h1>
+        <form action="{{ url_for('search') }}" method="get">
+            <label for="keyword">Keyword:</label>
+            <input type="text" id="keyword" name="keyword" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 50px;
+            background-color: #000;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #header1 .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        #header1 a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: #111;
+        }
+
+        .profile-container {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 40px auto;
+            width: 80%;
+            max-width: 1000px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .photo-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .photo-card {
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            width: calc(50% - 20px);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .photo-card img {
+            width: 100%;
+            display: block;
+        }
+
+        .photo-card .details {
+            padding: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .photo-card .details h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+        }
+
+        .photo-card .details p {
+            margin: 0;
+            color: #606770;
+            font-size: 1.2em;
+        }
+
+        .photo-card .details .edit-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            align-self: flex-start;
+        }
+
+        .photo-card .details .edit-button:hover {
+            background-color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .photo-card {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- My Photo Diary 바 -->
+    <div id="header1">
+        <div>My Photo Diary</div>
+        <div class="nav-right">
+            <a href="{{ url_for('signout') }}">Sign Out</a>
+        </div>
+    </div>
+
+    <!-- 네비게이션 바 -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">HOME</a></li>
+            <li><a href="{{ url_for('profile') }}">PROFILE</a></li>
+            <li><a href="{{ url_for('upload_photo') }}">UPLOAD</a></li>
+            <li><a href="{{ url_for('messages') }}">MESSAGE</a></li>
+        </ul>
+    </nav>
+
+    <!-- 프로필 컨테이너 -->
+    <div class="profile-container">
+        <h1>{{ session['username'] }}'s Profile</h1>
+        <div class="photo-list">
+            {% for photo in photos %}
+            <div class="photo-card">
+                <img src="{{ photo.photo_url }}" alt="{{ photo.description }}">
+                <div class="details">
+                    <h3>{{ photo.description }}</h3>
+                    <p>Keywords: {{ photo.keywords | join(', ') }}</p>
+                    {% if session['username'] == photo.username %}
+                    <a href="{{ url_for('edit_photo', photo_id=photo._id) }}" class="edit-button">Edit</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
